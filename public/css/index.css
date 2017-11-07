@@ -1,0 +1,96 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #e8eaf6;
+}
+
+.dropdown-button {
+  padding: 0 35px;
+}
+
+.card-category-progress {
+  padding: 15px 0;
+}
+
+.card-action .btn-floating,
+.header .btn-floating {
+  margin-left: 5px;
+}
+
+.container {
+  width: 80% !important;
+}
+
+.app-container {
+  width: 90%;
+}
+
+.modal-add-card {
+  width: 45% !important;
+}
+
+#modalAddCard .row {
+  margin-bottom: 0 !important;
+}
+
+#start {
+  top: 18% !important;
+  width: 45% !important;
+  height: 50% !important;
+}
+
+#start .modal-content {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url('http://doctorstime.com/blog/wp-content/uploads/2017/07/coffee.jpg');
+}
+
+#start .modal-card-word {
+  display: inline-block;
+  color: #fff;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+
+#start .modal-card-desrc {
+  display: inline-block;
+  margin-top: 20px;
+  color: #fff;
+  padding: 0 15px;
+  border-radius: 5px;
+}
+
+#start .modal-card-word h4 {
+  margin: 0;
+}
+
+.card-content-tools {
+  margin-top: 25px;
+}
+
+.card-content-tools .btn {
+  padding: 0 1rem;
+}
+
+.complect-active {
+  border: 2px solid #ba68c8;
+}
+
+.complect-active::after {
+  content: '';
+  position: absolute;
+  right: -40px;
+  top: 10px;
+  border: 20px solid transparent;
+  border-left: 20px solid #ba68c8;
+}
+
+.memo-card {
+  min-height: 230px;
+}
+
+.action-complect {
+  min-height: 70px;
+}
