@@ -10,7 +10,7 @@ This application is available on the following link <a href="http://memostudy.00
  - Axios (JavaScript)
  - Materialaize (CSS and JavsScript)
 
-### Server-side and Frotend
+### Server-side and Frontend
 You have two ways of learning memo cards. 
 
 The first one is working with data which hosted on server in MySQL database. All manipulations come through API made with Laravel. For that you have to register the new user and log in.
