@@ -15,7 +15,7 @@ const Complect = ({ title, description, progress, cardsCount, isActive, setEddit
                 <div className="determinate" style={ { width: progress + '%' } }></div>
             </div>
           </div>
-          <div className="col s2">{ progress }%</div>
+          <div className="col s2">{ progress ? progress : 0 }%</div>
         </div>
       </div>
       <div className="card-action action-complect">

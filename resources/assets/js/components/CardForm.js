@@ -23,7 +23,13 @@ class CardForm extends Component {
       }
     } else {
       if (title.length > 0 && details.length > 0) {
-        this.props.editCard({ title: title, details, img }, this.props.edittingItem.id);
+        this.props.editCard({
+            id: this.props.edittingItem.id,
+            title,
+            details,
+            img,
+            collection_id: this.props.edittingItem.collection_id || this.props.edittingItem.collection_default_id
+        });
       } else {
         Materialize.toast(`You have to set title and details fields!`, 8000);
       }

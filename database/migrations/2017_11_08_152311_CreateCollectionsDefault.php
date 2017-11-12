@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCollectionsTable extends Migration
+class CreateCollectionsDefault extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateCollectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('collections', function (Blueprint $table) {
+        Schema::create('collections_default', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->integer('user_id');
             $table->string('title', 30);
             $table->string('description');
-            $table->integer('progress')->default(0)->unsigned();
         });
     }
 
@@ -30,6 +28,6 @@ class CreateCollectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('collections');
+        Schema::dropIfExists('collections_default');
     }
 }

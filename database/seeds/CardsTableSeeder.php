@@ -15,12 +15,12 @@ class CardsTableSeeder extends Seeder
 
         \App\Card::truncate();
 
-        for($i = 0; $i < 80; $i++) {
+        for($i = 0; $i < 120; $i++) {
             \App\Card::create([
                 'title' => $faker->word,
                 'details' => $faker->sentence(random_int(3, 6)),
                 'img' => $faker->imageUrl(800, 600),
-                'collection_id' => random_int(0, 6)
+                'collection_id' => random_int(0, 20)
             ]);
         }
     }

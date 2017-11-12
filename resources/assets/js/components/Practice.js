@@ -53,7 +53,11 @@ class Practice extends Component {
 
   finish() {
     this.again();
-    // save the result for complects
+
+    const complect = this.props.complect;
+    complect.progress = Math.round((this.state.complited / this.props.cards.length) * 100);
+
+    this.props.editComplect(complect);
   }
 
   practiceCard() {

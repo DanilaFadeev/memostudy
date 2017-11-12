@@ -14,9 +14,9 @@ class Cards extends Component {
     this.props.addCard(card);
   }
 
-  edit(card, id) {
-    const oldCard = this.props.cards.find(item => item.id === id);
-    this.props.editCard(card, id);
+  edit(card) {
+    const oldCard = this.props.cards.find(item => item.id === card.id);
+    this.props.editCard(card, card.id);
 
     this.setState({editting: null});
 

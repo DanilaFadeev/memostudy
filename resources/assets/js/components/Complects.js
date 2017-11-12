@@ -26,7 +26,7 @@ class Complects extends Component {
   edit(complect) {
       this.props.editComplect(complect);
 
-      this.setState({editting: null});
+      this.setState({ edittingItem: null });
   }
 
   delete() {

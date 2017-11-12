@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import $ from 'jquery';
 
 import Cards from './Cards';
 import Complects from './Complects';
 import Practice from './Practice';
 
+import DataServerLoader from './../DataServerLoader';
+import DataLocalLoader from './../DataLocalLoader';
 
 class App extends Component {
   constructor(props) {
@@ -12,22 +15,26 @@ class App extends Component {
 
     this.loadCards = this.loadCards.bind(this);
     this.state = { complects: [], cards: [], active_id: null };
+
+    if(this.props.api_token && this.props.user_id) {
+        this.dataLoader = new DataServerLoader(this.props.api_token, this.setState.bind(this));
+    } else {
+        this.dataLoader = new DataLocalLoader(this.setState.bind(this));
+    }
+
   }
 
   componentDidMount() {
-    axios.get('/api/collections')
-      .then( ({data}) => this.setState({ complects: data }) );
+    this.dataLoader.getCollections();
   }
 
   loadCards(active_id) {
-    axios.get('/api/collections/' + active_id)
-      .then( ({data}) => this.setState({ cards: data, active_id }) );
+    this.dataLoader.getCards(active_id);
   }
 
   addCard(card) {
     const collection_id = this.state.active_id;
-    axios.post('/api/cards', { ...card, collection_id })
-        .catch(error => console.log(error));
+    this.dataLoader.addCard(card, collection_id);
 
     const complectIndex = this.state.complects.findIndex(item => item.id === collection_id);
     const complect = this.state.complects[complectIndex];
@@ -43,13 +50,10 @@ class App extends Component {
     });
   }
 
-  editCard(card, id) {
-      const collection_id = this.state.active_id;
-      axios.put('/api/cards/' + id, { ...card, collection_id })
-          .catch(error => console.log(error));
+  editCard(card) {
+      this.dataLoader.updateCard(card);
 
-      const cardIndex = this.state.cards.findIndex(item => item.id === id);
-
+      const cardIndex = this.state.cards.findIndex(item => item.id === card.id);
       this.setState({
           cards: [
               ...this.state.cards.slice(0, cardIndex),
@@ -60,8 +64,7 @@ class App extends Component {
   }
 
   deleteCard(id) {
-    axios.delete('/api/cards/' + id)
-        .catch(error => console.log(error));
+      this.dataLoader.deleteCard(id);
 
       const complectIndex = this.state.complects.findIndex(item => item.id === this.state.active_id);
       const complect = this.state.complects[complectIndex];
@@ -80,15 +83,11 @@ class App extends Component {
   }
 
   addComplect(complect) {
-      axios.post('/api/collections', {
-          ...complect,
-          user_id: 0 // set for logged user
-      });
+      this.dataLoader.addCollection(complect, this.props.user_id);
   }
 
   editComplect(complect) {
-      axios.put('/api/collections/' + complect.id, complect)
-          .catch(error => console.log(error));
+      this.dataLoader.updateCollection(complect);
 
       const complectIndex = this.state.complects.findIndex(item => item.id === complect.id);
 
@@ -98,12 +97,11 @@ class App extends Component {
               complect,
               ...this.state.complects.slice(complectIndex + 1),
           ]
-      })
+      });
   }
 
   deleteComplect() {
-      axios.delete('/api/collections/' + this.state.active_id)
-          .catch(error => console.log(error));
+      this.dataLoader.deleteCollection(this.state.active_id);
 
       const complectIndex = this.state.complects.findIndex(item => item.id === this.state.active_id);
       const newActiveIndex = complectIndex === 0 ? 1 : 0;
@@ -130,8 +128,8 @@ class App extends Component {
           <Complects
             complects={this.state.complects}
             activeId={this.state.active_id}
-            loadCards={this.loadCards}
-            addComplect={this.addComplect}
+            loadCards={this.loadCards.bind(this)}
+            addComplect={this.addComplect.bind(this)}
             editComplect={this.editComplect.bind(this)}
             deleteComplect={this.deleteComplect.bind(this)}
           />
@@ -145,7 +143,12 @@ class App extends Component {
             reverse={this.reverse.bind(this)}
           />
         </div>
-        <Practice cards={this.state.cards} reverse={this.reverse.bind(this)} />
+        <Practice
+            cards={this.state.cards}
+            reverse={this.reverse.bind(this)}
+            complect={this.state.complects.find(item => item.id === this.state.active_id)}
+            editComplect={this.editComplect.bind(this)}
+        />
       </div>
     );
   }
